@@ -2,6 +2,7 @@
 #define _MATRIXMATH_H_
 
 #include <Arduino.h>
+#include <ArduinoLPS.h>
 #include <stdint.h>
 
 class Vector3f;
@@ -38,18 +39,30 @@ class Matrix3f{
         Matrix3f operator- (const Matrix3f&);
         float& operator() (const uint8_t, const uint8_t);
 
-        virtual void print() const{
-            uint8_t i, j;
-            for(i = 0; i < 3; i++){
-                for(j = 0; j < 3; j++){
-                    Serial.print(data_[i][j]);
-                    Serial.print("\t");
-                }
-                Serial.println();
-            }
+        // virtual void print() const{
+        //     uint8_t i, j;
+        //     for(i = 0; i < 3; i++){
+        //         for(j = 0; j < 3; j++){
+        //             Serial.print(data_[i][j]);
+        //             Serial.print("\t");
+        //         }
+        //         Serial.println();
+        //     }
+        // }
+
+        /**
+         * @brief Returns the 3x3 identity
+         * @return Matrix3f object that is the identity
+         */
+        static Matrix3f Identity(){
+            Matrix3f i;
+
+            i << 1, 0, 0,
+                 0, 1, 0,
+                 0, 0, 1;
+
+            return i;
         }
-
-
         /***********************
          * Initializtion:
          * Matrix3f m << 1, 2, 3,
@@ -83,6 +96,8 @@ class Matrix3f{
             return Loader(*this, 1);
         }
 
+    /* Destructor */
+    ~Matrix3f(){}
     protected:
         float data_[3][3] = {{0}}; // Initialized to all zeros
         Matrix3f adjugate_(); 
@@ -92,28 +107,28 @@ class Matrix3f{
 
 
 /* For typecasting vector3 (in Arduino_LPS) to Vector3f */
-#ifndef vector3
-typedef struct vector3{
-    float x;
-    float y;
-    float z;
+// #ifndef vector3
+// typedef struct vector3{
+//     float x;
+//     float y;
+//     float z;
 
-    inline vector3 operator-(vector3 a){
-      return {x - a.x, y - a.y, z - a.z};
-    }
+//     inline vector3 operator-(vector3 a){
+//       return {x - a.x, y - a.y, z - a.z};
+//     }
 
-    inline vector3 operator+(vector3 a){
-      return {x + a.x, y + a.y, z + a.z};
-    }
+//     inline vector3 operator+(vector3 a){
+//       return {x + a.x, y + a.y, z + a.z};
+//     }
 
-    float norm(){
-      return pow(this->x, 2) + pow(this->y, 2) + pow(this->z, 2);
-    }
+//     float norm(){
+//       return pow(this->x, 2) + pow(this->y, 2) + pow(this->z, 2);
+//     }
 
-} vec3;
+// } vec3;
 
-typedef vec3 point3;
-#endif
+// typedef vec3 point3;
+// #endif
 
 /**
  * A vector is simply a special case of a matrix
@@ -154,12 +169,12 @@ class Vector3f : public Matrix3f{
             (*this)(2,0) = z; 
         }
 
-        void print() const{
-            for(uint8_t i = 0; i < 3; i++){
-                Serial.print("\t");
-                Serial.println((*this)[i]);
-            }
-        }
+        // void print() const{
+        //     for(uint8_t i = 0; i < 3; i++){
+        //         Serial.print("\t");
+        //         Serial.println((*this)[i]);
+        //     }
+        // }
 
         /**
          * For comma initialization
@@ -228,6 +243,9 @@ class Vector3f : public Matrix3f{
                         (*this)[0] * vec[1] - (*this)[1] * vec[0]);
             return v;
         }
+
+
+        ~Vector3f(){}
 
 };
 
