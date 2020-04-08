@@ -27,6 +27,7 @@ class Matrix3f{
         
         /* Matrix Operations */
         Matrix3f inverse();
+        bool inverseExists();
         Matrix3f transpose();
         float determinant();
         
@@ -39,16 +40,16 @@ class Matrix3f{
         Matrix3f operator- (const Matrix3f&);
         float& operator() (const uint8_t, const uint8_t);
 
-        // virtual void print() const{
-        //     uint8_t i, j;
-        //     for(i = 0; i < 3; i++){
-        //         for(j = 0; j < 3; j++){
-        //             Serial.print(data_[i][j]);
-        //             Serial.print("\t");
-        //         }
-        //         Serial.println();
-        //     }
-        // }
+        virtual void print() const{
+            uint8_t i, j;
+            for(i = 0; i < 3; i++){
+                for(j = 0; j < 3; j++){
+                    Serial.print(data_[i][j]);
+                    Serial.print("\t");
+                }
+                Serial.println();
+            }
+        }
 
         /**
          * @brief Returns the 3x3 identity

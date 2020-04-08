@@ -23,11 +23,22 @@ Matrix3f Matrix3f::transpose(){
  */
 Matrix3f Matrix3f::inverse(){
     float det = determinant();
-    if(fabs(det) < 0.0001) { return nullptr; }
+    // NOTE: This segfaults the uC if determinant is zero. How do we stop this?
+    if(fabs(det) < 0.000000001) { return nullptr; }
     Matrix3f adj = adjugate_();
     return adj * (1.0f / det);
 }
 
+
+/**
+ * @brief A function to determine if the matrix is invertible.
+ * @return True if the matrix has an inverse
+ * @return False if the matrix does not have an inverse
+ */
+bool Matrix3f::inverseExists(){
+    if(fabs(determinant()) < 0.000000001) { return false; }
+    return true;
+}
 
 /**
  * @brief Multiplication overload for multiplying a 3x3 matrix by a 3x1 vector
