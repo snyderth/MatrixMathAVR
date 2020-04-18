@@ -169,7 +169,25 @@ class Vector3f : public Matrix3f{
             (*this)(1,0) = y;
             (*this)(2,0) = z; 
         }
-
+        
+        /**
+         * @brief A function to transpose the vector. This is not in place.
+         * @return A new matrix instance that is the transposed version of this matrix
+         */
+        Vector3f transpose(){
+            float newData[3][3] = {{0}};
+            uint8_t i = 0, j = 0;
+            for(i; i < 3; i++){
+                for(j; j < 3; j++){
+                    newData[i][j] = (*this)(j, i);
+                }
+            }
+            Vector3f v;
+            for(i = 0; i < 3; i ++){
+                v.data_[i/3][i%3] = newData[i/3][i%3];
+            }
+            return v;
+        }
         // void print() const{
         //     for(uint8_t i = 0; i < 3; i++){
         //         Serial.print("\t");
@@ -231,6 +249,16 @@ class Vector3f : public Matrix3f{
                     + ((*this)[1] * v[1]) 
                     + ((*this)[2] * v[2]));
         }
+        
+        
+        /**
+         * @brief Scalar elementwise multiplication of the vector
+         */
+        Vector3f operator* (const float f){
+            return Vector3f((*this)[0] * f,
+                            (*this)[1] * f,
+                            (*this)[2] * f);
+        }
 
         /**
          * @brief Cross product of two vectors
@@ -244,6 +272,18 @@ class Vector3f : public Matrix3f{
                         (*this)[0] * vec[1] - (*this)[1] * vec[0]);
             return v;
         }
+
+
+        /**
+         *  @brief A scalar elementwise division of the vector
+         */
+        Vector3f operator/ (const float f){
+            Vector3f v((*this)[0] / f,
+                        (*this)[1] / f,
+                        (*this)[2] / f);
+            return v;
+        }
+
 
 
         ~Vector3f(){}
