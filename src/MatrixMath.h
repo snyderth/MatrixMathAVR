@@ -52,6 +52,19 @@ class Matrix3f{
         }
 
         /**
+         * @brief A function to give access to the size of the matrix
+         * @param rows The number of rows. Pass in an integer value and the 
+         * function populates that integer value
+         * @param cols The number of columns. Pass in an integer value and 
+         * the function populates that integer value
+         * @return Nothing
+         */
+        void size(uint16_t& rows, uint16_t& cols){
+            rows = 3;
+            cols = 3;
+        }
+    
+        /**
          * @brief Returns the 3x3 identity
          * @return Matrix3f object that is the identity
          */
