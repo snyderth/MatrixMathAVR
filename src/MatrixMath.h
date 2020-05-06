@@ -1,8 +1,9 @@
 #ifndef _MATRIXMATH_H_
 #define _MATRIXMATH_H_
 
-#include <Arduino.h>
-#include <ArduinoLPS.h>
+//#include <Arduino.h>
+//#include <ArduinoLPS.h>
+#include "generic_types.h"
 #include <stdint.h>
 
 class Vector3f;
