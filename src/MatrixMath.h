@@ -1,10 +1,19 @@
 #ifndef _MATRIXMATH_H_
 #define _MATRIXMATH_H_
 
-//#include <Arduino.h>
-//#include <ArduinoLPS.h>
-#include "generic_types.h"
+#ifndef _WIN32
+#include <Arduino.h>
+#include <ArduinoLPS.h>
+
+#else
+
+#include <cmath>
+#include "../../ArduinoLPS/include/generic_types.h"
+
+#endif
+
 #include <stdint.h>
+
 
 class Vector3f;
 
@@ -45,10 +54,15 @@ class Matrix3f{
             uint8_t i, j;
             for(i = 0; i < 3; i++){
                 for(j = 0; j < 3; j++){
+#ifndef _WIN32
                     Serial.print(data_[i][j]);
                     Serial.print("\t");
+#endif
                 }
+#ifndef _WIN32
                 Serial.println();
+#endif
+
             }
         }
 
@@ -122,28 +136,28 @@ class Matrix3f{
 
 
 /* For typecasting vector3 (in Arduino_LPS) to Vector3f */
-// #ifndef vector3
-// typedef struct vector3{
-//     float x;
-//     float y;
-//     float z;
+ //#ifndef vector3
+ //typedef struct vector3{
+ //    float x;
+ //    float y;
+ //    float z;
 
-//     inline vector3 operator-(vector3 a){
-//       return {x - a.x, y - a.y, z - a.z};
-//     }
+ //    inline vector3 operator-(vector3 a){
+ //      return {x - a.x, y - a.y, z - a.z};
+ //    }
 
-//     inline vector3 operator+(vector3 a){
-//       return {x + a.x, y + a.y, z + a.z};
-//     }
+ //    inline vector3 operator+(vector3 a){
+ //      return {x + a.x, y + a.y, z + a.z};
+ //    }
 
-//     float norm(){
-//       return pow(this->x, 2) + pow(this->y, 2) + pow(this->z, 2);
-//     }
+ //    float norm(){
+ //      return pow(this->x, 2) + pow(this->y, 2) + pow(this->z, 2);
+ //    }
 
-// } vec3;
+ //} vec3;
 
-// typedef vec3 point3;
-// #endif
+ //typedef vec3 point3;
+ //#endif
 
 /**
  * A vector is simply a special case of a matrix
